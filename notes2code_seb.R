@@ -29,3 +29,29 @@ plot(x = time(chicken),
      type = "p",
      xlab = "time",
      ylab = "residuals")
+
+
+######################################
+# LA Mortality, Temp, Pollution Data #
+######################################
+
+# data
+cmort
+class(cmort) # ts (so, time series data is a type apparently)
+
+# plot the data
+par(mfrow = c(3,1))
+plot(cmort, main = "Cardiovascular Mortality", xlab = "time", ylab = "# deaths")
+plot(tempr, main = "Temperature", xlab = "time", ylab = "temp")
+plot(part, main = "Pollution", xlab = "time", ylab = "pol.")
+
+# create all predictor variables for the model
+temp <- tempr - mean(tempr)
+temp2 <- temp^2
+trend <- time(cmort)
+
+# make models
+m1 <- lm(formula = cmort ~ trend, na.action = NULL)
+
+# random note:
+# 1. hot key for assignment operator (i.e. <-) is alt + -
