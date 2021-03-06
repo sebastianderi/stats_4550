@@ -22,6 +22,17 @@ plot(x=time(chicken), y=w, type='p',
      xlab='Time', ylab='w')
 
 
+# Compare plot with detrended plot
+par(mfrow = c(2,1))
+plot(x = time(chicken),
+     y = chicken,
+     type = 'l',
+     main = "baseline plot")
+plot(x = time(w),
+     y = w,
+     type = 'l',
+     main = "detrended plot")
+
 #################################
 # Plot Student's t-distribution #
 #################################
@@ -180,7 +191,7 @@ par(mfrow=c(1,1))
 acf(y)
 
 # Look at differenced vs detrended chicken price 
-dev.new()
+#dev.new()
 par(mfrow=c(2,1))
 plot(x=time(chicken), y=diff(chicken), type='l',
      xlab='Time', ylab='Cents per pound',
@@ -202,7 +213,7 @@ acf(y, main='ACF of detrended price')
 # Linear trend 
 t <- seq(1, 20, 1)
 mu <- 1.5 + 3*t
-dev.new()
+#dev.new()
 par(mfrow=c(2,1))
 plot(mu, main='Linear trend')
 plot(diff(mu), main='First difference')
@@ -210,17 +221,30 @@ plot(diff(mu), main='First difference')
 # Quadratic trend 
 t <- seq(1, 20, 1)
 mu <- 1.5 - t + t^2
-dev.new()
+#dev.new()
 par(mfrow=c(3,1))
 plot(mu, main='Quadratic trend')
 plot(diff(mu), main='First difference')
 plot(diff(diff(mu)), main='Second difference')
+
+# Cubic trend 
+t_1 <- seq(1, 20, 1)
+mu_1 <- 1.5 + t + t^2 + t^3
+dev.new()
+par(mfrow=c(4,1))
+plot(mu_1, main='Quadratic trend')
+plot(diff(mu_1), main='First difference')
+plot(diff(diff(mu_1)), main='Second difference')
+plot(diff(diff(diff(mu_1))), main='Third difference')
+#plot(diff(diff(diff(diff(mu_1)))), main='Fourth difference')
 
 ####################################
 # Log transformation of J&J series #
 ####################################
 
 library(astsa)
+dev.new()
+par(mfrow = c(2,1))
 plot(jj, type='o', main='Quarterly Earnings per Share')
 plot(log(jj), type='o', main='Log of J&J series ')
 fit <- lm(log(jj) ~ time(jj), na.action=NULL)
